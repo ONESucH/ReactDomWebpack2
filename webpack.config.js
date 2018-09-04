@@ -1,17 +1,18 @@
-const path = require('path');
+// config development
+const config = {
+        entry: './src/index.js'
+        //...
+    };
 
-const components = [
-    './src/index.js',
-    './src/main/main.component.ts',
-    './src/header/header.component.ts',
-    './src/footer/footer.component.ts'
-];
+module.exports = (env, argv) => {
+    
+    if (argv.mode === 'development') {
+        config.devtool = 'source-map';
+    }
 
-module.exports = {
-    entry: './src/main.js',
-    output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js'
-    },
-    watch: true
+    if (argv.mode === 'production') {
+        config.devtool = 'js'
+    }
+
+    return config;
 };

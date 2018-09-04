@@ -4,7 +4,8 @@
   "description": "start template reactDom",
   "main": "index.js",
   "scripts": {
-    "start": "webpack --watch src"
+    "start": "webpack --mode=development --watch src",
+    "build": "webpack --mode=production"
   },
   "keywords": [
     "react",
@@ -18,6 +19,9 @@
     "webpack": "^4.17.2"
   },
   "devDependencies": {
-    "webpack-cli": "^3.1.0"
+    "fs": "0.0.1-security",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.7",
+    "webpack-uglify-js-plugin": "^1.1.9"
   }
 }

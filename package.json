@@ -1,0 +1,23 @@
+{
+  "name": "reactdomstarttemplate",
+  "version": "1.0.0",
+  "description": "start template reactDom",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack --watch src"
+  },
+  "keywords": [
+    "react",
+    "webpack2",
+    "npm",
+    "bower"
+  ],
+  "author": "Богданов Илья <onesuch07@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "webpack": "^4.17.2"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.1.0"
+  }
+}

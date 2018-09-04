@@ -1,16 +1,15 @@
 // webpack.production.config
 
-const webpack = require('webpack'),
-    webpackUglifyJsPlugin = require('webpack-uglify-js-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    mode: 'production', // < -- Сборка production
+    mode: 'production',
     plugins: [
         new webpackUglifyJsPlugin({
-            cacheFolder: path.resolve(__dirname, 'src/app/'),
+            cacheFolder: path.resolve(__dirname, 'src/'),
             debug: true,
             minimize: true,
-            sourceMap: false,
+            sourceMap: true,
             output: {
                 comments: false
             },
@@ -20,6 +19,7 @@ module.exports = {
         }),
         new webpack.webpackUglifyJsPlugin({'process.env.NODE_ENV': JSON.stringify('production')}),
         new webpack.optimize.ModuleConcatenationPlugin(),
-        new webpack.NoEmitOnErrorsPlugin()
+        new webpack.NoEmitOnErrorsPlugin(),
+        new HtmlWebpackPlugin()
     ]
 };

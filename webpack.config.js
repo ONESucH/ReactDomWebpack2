@@ -1,12 +1,12 @@
 const path = require('path'),
     webpack = require('webpack'),
-    devServer = require('webpack-dev-server'),
+    CopyWebpackPlugin = require('copy-webpack-plugin'),
     webpackUglifyJsPlugin = require('webpack-uglify-js-plugin'),
-    HtmlWebpackPlugin = require('html-webpack-plugin'),
+    CleanCSSPlugin = require('less-plugin-clean-css'),
     config = {
-        entry: './src/index.ts',
+        entry: './src/index.js',
         output: {
-            path: path.resolve(__dirname, './dist'),
+            path: path.resolve(__dirname, './dist/'),
             filename: 'bundle.js'
         }
     };
@@ -14,14 +14,13 @@ const path = require('path'),
 module.exports = (env, argv) => {
 
     if (argv.mode === 'development') {
-        config.watch = true;
         config.devtool = 'inline-source-map';
         config.mode = 'development';
         config.plugins = [
-            new webpack.NamedModulesPlugin(),
-            new webpack.NamedChunksPlugin(),
-            new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify('development')}),
-            new HtmlWebpackPlugin()
+            new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify(argv.mode)}),
+            new CopyWebpackPlugin([
+                { from: './src/*.html', to: '' }
+            ])
         ];
         config.module = {
             rules: [
@@ -36,40 +35,36 @@ module.exports = (env, argv) => {
                     }
                 },
                 {
-                    test: /\.less$/,
-                    use: [
-                        {loader: 'style-loader'},
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                modules: true
-                            }
-                        },
-                        {loader: 'less-loader'}
-                    ]
-                },
-                {
                     test: /\.tsx?$/,
                     use: 'ts-loader',
                     exclude: /node_modules/
+                },
+                {
+                    test: /\.less$/,
+                    use: [
+                        {loader: 'style-loader'},
+                        {loader: 'css-loader'},
+                        {loader: 'less-loader'}
+                    ]
                 }
             ]
-        };
-        config.devServer = {
-            contentBase: path.join(__dirname, 'dist'),
-            compress: true,
-            port: 3000
         };
         config.resolve = {
             extensions: ['.tsx', '.ts', '.js']
         };
+        config.devServer = {
+            contentBase: path.join(__dirname, './src/'),
+            compress: true,
+            port: 3000
+        };
+        config.watch = true;
     }
 
     if (argv.mode === 'production') {
         config.mode = 'production';
         config.plugins = [
             new webpackUglifyJsPlugin({
-                cacheFolder: path.resolve(__dirname, 'src/'),
+                cacheFolder: path.resolve(__dirname, './dist/'),
                 debug: true,
                 minimize: true,
                 sourceMap: true,
@@ -81,9 +76,25 @@ module.exports = (env, argv) => {
                 }
             }),
             new webpack.optimize.ModuleConcatenationPlugin(),
-            new webpack.NoEmitOnErrorsPlugin(),
-            new HtmlWebpackPlugin()
-        ]
+            new CopyWebpackPlugin([
+                { from: './src/assets', to: 'assets' }
+            ])
+        ];
+        config.module = {
+            rules: [
+                {
+                    loader: 'less-loader', options: {
+                        plugins: [
+                            new CleanCSSPlugin({advanced: true})
+                        ]
+                    }
+                },
+                {
+                    test: /\.(jpe?g|png|ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
+                    use: 'base64-inline-loader?limit=1000&name=[name].[ext]'
+                }
+            ]
+        }
     }
 
     return config;

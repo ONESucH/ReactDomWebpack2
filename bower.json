@@ -1,0 +1,27 @@
+{
+  "name": "reactdomstarttemplate",
+  "description": "start template reactDom",
+  "main": "",
+  "authors": [
+    "Богданов Илья <onesuch07@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "webpack2",
+    "npm",
+    "bower"
+  ],
+  "homepage": "https://github.com/ONESucH/ReactDomWebpack2",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/assets/vendor",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "font-awesome": "^5.3.1"
+  }
+}

@@ -1,0 +1,83 @@
+/*
+  Fonts
+  Created on : 05.09.2018
+  Author     : onesuch07@gmail.com
+  Github     : https://github.com/Onesuch
+*/
+@h1: 50px;
+@h2: 40px;
+@h3: 30px;
+@h4: 25px;
+@h5: 20px;
+@h6: 18px;
+
+@Roboto: 'Roboto';
+
+@font-face {
+  font-family: @Roboto;
+  src: url('assets/fonts/Roboto-Regular.eot');
+  src: url('assets/fonts/Roboto-Regular.eot?#iefix') format('embedded-opentype'),
+       url('assets/fonts/Roboto-Regular.woff') format('woff'),
+       url('assets/fonts/Roboto-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: @Roboto, sans-serif;
+}
+
+body {
+  font-family: sans-serif;
+  font-size: 14px;
+  background: #fff;
+}
+
+ul {
+  list-style-type: none;
+}
+
+h1 {
+  font-family: @Roboto;
+  font-size: @h1;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-family: @Roboto;
+  font-size: @h2;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-family: @Roboto;
+  font-size: @h3;
+  text-transform: uppercase;
+}
+
+h4 {
+  font-family: @Roboto;
+  font-size: @h4;
+  text-transform: uppercase;
+}
+
+h5 {
+  font-family: @Roboto;
+  font-size: @h4;
+  text-transform: uppercase;
+}
+
+h6 {
+  font-family: @Roboto;
+  font-size: @h5;
+  text-transform: uppercase;
+}
+
+.max-size-window {
+  max-width: 1400px;
+  width: 100%;
+  margin: auto;
+  box-sizing: border-box;
+}

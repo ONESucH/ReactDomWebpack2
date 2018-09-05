@@ -4,9 +4,8 @@
   "description": "start template reactDom",
   "private": true,
   "scripts": {
-    "start": "npm run server && --mode=development",
-    "build": "webpack --mode=production",
-    "server": "webpack-dev-server"
+    "start": "webpack-dev-server --mode=development",
+    "build": "webpack --mode=production"
   },
   "keywords": [
     "react",
@@ -24,6 +23,7 @@
     "copy-webpack-plugin": "^4.5.2",
     "css-loader": "^1.0.0",
     "html-webpack-plugin": "^3.2.0",
+    "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "less-plugin-clean-css": "^1.5.1",
     "path": "^0.12.7",

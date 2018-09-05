@@ -4,8 +4,9 @@
   "description": "start template reactDom",
   "private": true,
   "scripts": {
-    "start": "webpack --mode=development",
-    "build": "webpack --mode=production"
+    "start": "webpack --mode=development && server",
+    "build": "webpack --mode=production",
+    "server": "webpack-dev-server"
   },
   "keywords": [
     "react",
@@ -17,6 +18,8 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
     "babel-loader": "^8.0.2",
     "html-webpack-plugin": "^3.2.0",
     "path": "^0.12.7",

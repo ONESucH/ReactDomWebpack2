@@ -1,16 +1,36 @@
+/* Модули */
 import React from 'react';
-import ReactDOM from 'react-dom';
+
+/* Стили */
 import './librares.global.less';
 import './alieses.less';
 import './styles.less';
 
-export default function ({types: t}) {
-    return {
-        visitor: {
-            Identifier(path) {
-                let name = path.node.name; // reverse the name: JavaScript -> tpircSavaJ
-                path.node.name = name.split('').reverse().join('');
-            }
-        }
-    };
+import ReactDOM from 'react-dom';
+
+/* Регистрируем основную компоненту */
+import MainComponent from './app/main/main.component.jsx';
+
+import HeaderComponent from './app/header/header.component.jsx';
+import FooterComponent from './app/footer/footer.component.jsx';
+
+/* Стили */
+import './index.less';
+
+export default class Root extends React.Component {
+    render() {
+        return (
+            <div className="app-main">
+                <div className="max-size-window">
+                    <HeaderComponent />
+                    
+                    <MainComponent />
+
+                    <FooterComponent />
+                </div>
+            </div>
+        );
+    }
 }
+
+ReactDOM.render(<Root />, document.getElementById('root'));

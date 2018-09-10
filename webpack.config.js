@@ -19,7 +19,7 @@ module.exports = (env, argv) => {
             rules: [
                 {
                     test: /\.(js|jsx|ts)?$/,
-                    exclude: /node_modules/,
+                    exclude: /(node_modules|bower_components)/,
                     use: {
                         loader: 'babel-loader'
                     }

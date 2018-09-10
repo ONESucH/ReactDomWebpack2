@@ -1,11 +1,14 @@
-const React = require('react');
+import React from 'react';
 
-module.exports = React.createClass({displayName: 'Toolbar',
-    render: () => {
+/* Стили */
+import './main.component.less';
+
+export default class MainComponent extends React.Component {
+    render() {
         return (
-            <div className="react-paste">
-                <button>Button 1</button>
+            <div className="main">
+                <h1>Main title downloading</h1>
             </div>
         );
     }
-});
+}

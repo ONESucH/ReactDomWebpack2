@@ -1,10 +1,9 @@
 const path = require('path'),
-    webpack = require('webpack'),
     CopyWebpackPlugin = require('copy-webpack-plugin'),
-    webpackUglifyJsPlugin = require('webpack-uglify-js-plugin'),
     CleanCSSPlugin = require('less-plugin-clean-css'),
+    HtmlWebPackPlugin = require('html-webpack-plugin'),
     config = {
-        entry: './src/index.js',
+        entry: './src/index.jsx',
         output: {
             path: path.resolve(__dirname, './dist/'),
             filename: 'bundle.js'
@@ -14,46 +13,43 @@ const path = require('path'),
 module.exports = (env, argv) => {
 
     if (argv.mode === 'development') {
-        config.devtool = 'inline-source-map';
         config.mode = 'development';
-        config.plugins = [
-            new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify(argv.mode)}),
-            new CopyWebpackPlugin([
-                { from: './src/*.html', to: '' }
-            ])
-        ];
+        config.devtool = 'inline-source-map';
         config.module = {
             rules: [
                 {
-                    test: /\.ts$/,
-                    exclude: /(node_modules|bower_components)/,
+                    test: /\.(js|jsx|ts)?$/,
+                    exclude: /node_modules/,
                     use: {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: ['@babel/preset-env']
-                        }
+                        loader: 'babel-loader'
                     }
                 },
                 {
-                    test: /\.tsx?$/,
-                    use: 'ts-loader',
-                    exclude: /node_modules/
-                },
-                {
-                    test: /\.less$/,
+                    test: /\.css$/,
                     use: [
                         {loader: 'style-loader'},
-                        {loader: 'css-loader'},
-                        {loader: 'less-loader'}
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                modules: true,
+                                importLoaders: 1,
+                                localIdentName: '[name]_[local]_[hash:base64]',
+                                sourceMap: true,
+                                minimize: true
+                            }
+                        }
                     ]
                 }
             ]
         };
-        config.resolve = {
-            extensions: ['.tsx', '.ts', '.js']
-        };
+        config.plugins = [
+            new HtmlWebPackPlugin({
+                template: './src/index.html',
+                filename: './index.html'
+            })
+        ];
         config.devServer = {
-            contentBase: path.join(__dirname, './src/'),
+            contentBase: path.join(__dirname, './dist/'),
             compress: true,
             port: 3000
         };
@@ -63,19 +59,6 @@ module.exports = (env, argv) => {
     if (argv.mode === 'production') {
         config.mode = 'production';
         config.plugins = [
-            new webpackUglifyJsPlugin({
-                cacheFolder: path.resolve(__dirname, './dist/'),
-                debug: true,
-                minimize: true,
-                sourceMap: true,
-                output: {
-                    comments: false
-                },
-                compressor: {
-                    warnings: true
-                }
-            }),
-            new webpack.optimize.ModuleConcatenationPlugin(),
             new CopyWebpackPlugin([
                 { from: './src/assets', to: 'assets' }
             ])
@@ -92,6 +75,17 @@ module.exports = (env, argv) => {
                 {
                     test: /\.(jpe?g|png|ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
                     use: 'base64-inline-loader?limit=1000&name=[name].[ext]'
+                },
+                {
+                    test: /\.(html)$/,
+                    use: {
+                        loader: 'html-loader',
+                        options: {
+                            minimize: true,
+                            removeComments: true,
+                            collapseWhitespace: true
+                        }
+                    }
                 }
             ]
         }

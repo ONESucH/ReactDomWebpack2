@@ -66,11 +66,20 @@ module.exports = (env, argv) => {
         config.module = {
             rules: [
                 {
-                    loader: 'less-loader', options: {
-                        plugins: [
-                            new CleanCSSPlugin({advanced: true})
-                        ]
-                    }
+                    test: /\.css$/,
+                    use: [
+                        {loader: 'style-loader'},
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                modules: true,
+                                importLoaders: 1,
+                                localIdentName: '[name]_[local]_[hash:base64]',
+                                sourceMap: true,
+                                minimize: true
+                            }
+                        }
+                    ]
                 },
                 {
                     test: /\.(jpe?g|png|ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,

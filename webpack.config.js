@@ -25,20 +25,21 @@ module.exports = (env, argv) => {
                     }
                 },
                 {
-                    test: /\.css$/,
-                    use: [
-                        {loader: 'style-loader'},
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                modules: true,
-                                importLoaders: 1,
-                                localIdentName: '[name]_[local]_[hash:base64]',
-                                sourceMap: true,
-                                minimize: true
-                            }
+                    test: /\.less$/,
+                    use: [{
+                        loader: 'style-loader'
+                    }, {
+                        loader: 'css-loader'
+                    }, {
+                        loader: 'less-loader', options: {
+                            paths: [
+                                path.resolve(__dirname, 'node_modules')
+                            ]
                         }
-                    ]
+                    }]
+                },
+                {
+                    test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' 
                 }
             ]
         };
@@ -49,7 +50,7 @@ module.exports = (env, argv) => {
             })
         ];
         config.devServer = {
-            contentBase: path.join(__dirname, './dist/'),
+            contentBase: path.join(__dirname, './src/'),
             compress: true,
             port: 3000
         };
@@ -60,26 +61,33 @@ module.exports = (env, argv) => {
         config.mode = 'production';
         config.plugins = [
             new CopyWebpackPlugin([
-                { from: './src/assets', to: 'assets' }
+                {from: './src/assets', to: 'assets'}
             ])
+        ];
+        config.plugins = [
+            new HtmlWebPackPlugin({
+                template: './src/index.html',
+                filename: './index.html'
+            })
         ];
         config.module = {
             rules: [
                 {
-                    test: /\.css$/,
-                    use: [
-                        {loader: 'style-loader'},
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                modules: true,
-                                importLoaders: 1,
-                                localIdentName: '[name]_[local]_[hash:base64]',
-                                sourceMap: true,
-                                minimize: true
-                            }
+                    test: /\.less$/,
+                    use: [{
+                        loader: 'style-loader'
+                    }, {
+                        loader: 'css-loader'
+                    }, {
+                        loader: 'less-loader', options: {
+                            paths: [
+                                path.resolve(__dirname, 'node_modules')
+                            ]
                         }
-                    ]
+                    }]
+                },
+                {
+                    test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000'
                 },
                 {
                     test: /\.(jpe?g|png|ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,

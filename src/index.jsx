@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Style from './style.css';
+import './librares.global.less';
+import './alieses.less';
+import './styles.less';
 
 export default function ({types: t}) {
     return {

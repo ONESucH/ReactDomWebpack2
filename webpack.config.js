@@ -1,6 +1,5 @@
 const path = require('path'),
     CopyWebpackPlugin = require('copy-webpack-plugin'),
-    CleanCSSPlugin = require('less-plugin-clean-css'),
     HtmlWebPackPlugin = require('html-webpack-plugin'),
     config = {
         entry: './src/index.jsx',
@@ -39,7 +38,7 @@ module.exports = (env, argv) => {
                     }]
                 },
                 {
-                    test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' 
+                    test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000'
                 }
             ]
         };
@@ -60,18 +59,27 @@ module.exports = (env, argv) => {
     if (argv.mode === 'production') {
         config.mode = 'production';
         config.plugins = [
+            new HtmlWebPackPlugin({
+                template: './src/index.html',
+                filename: './index.html'
+            }),
             new CopyWebpackPlugin([
                 {from: './src/assets', to: 'assets'}
             ])
         ];
-        config.plugins = [
-            new HtmlWebPackPlugin({
-                template: './src/index.html',
-                filename: './index.html'
-            })
-        ];
         config.module = {
             rules: [
+                {
+                    test: /\.(html)$/,
+                    use: {
+                        loader: 'html-loader',
+                        options: {
+                            minimize: true,
+                            removeComments: true,
+                            collapseWhitespace: true
+                        }
+                    }
+                },
                 {
                     test: /\.less$/,
                     use: [{
@@ -87,23 +95,19 @@ module.exports = (env, argv) => {
                     }]
                 },
                 {
+                    test: /\.(js|jsx|ts)?$/,
+                    exclude: /(node_modules|bower_components)/,
+                    use: {
+                        loader: 'babel-loader'
+                    }
+                },
+                {
                     test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000'
                 },
                 {
                     test: /\.(jpe?g|png|ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
                     use: 'base64-inline-loader?limit=1000&name=[name].[ext]'
                 },
-                {
-                    test: /\.(html)$/,
-                    use: {
-                        loader: 'html-loader',
-                        options: {
-                            minimize: true,
-                            removeComments: true,
-                            collapseWhitespace: true
-                        }
-                    }
-                }
             ]
         }
     }

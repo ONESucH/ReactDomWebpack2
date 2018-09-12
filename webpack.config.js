@@ -47,8 +47,8 @@ module.exports = (env, argv) => {
             ]
         };
         config.resolve = {
-            extensions: ['', '.js', '.jsx', '.ts']
-        }
+            extensions: ['.js', '.jsx', '.ts']
+        };
         config.plugins = [
             new HtmlWebPackPlugin({
                 template: './src/index.html',

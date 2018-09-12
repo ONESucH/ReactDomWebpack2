@@ -8,6 +8,12 @@ export default class MainComponent extends React.Component {
         return (
             <div className="main">
                 <h1>Main title downloading</h1>
+                <img src="/favicon.png" alt="img"/>
+                <img src="/favicon.png" alt="img"/>
+                <img src="/favicon.png" alt="img"/>
+                <img src="/favicon.png" alt="img"/>
+                <img src="/favicon.png" alt="img"/>
+                <img src="/favicon.png" alt="img"/>
             </div>
         );
     }

@@ -7,6 +7,7 @@ const path = require('path'),
         output: {
             path: path.resolve(__dirname, './dist/'),
             filename: 'bundle.js',
+            publicPath: '/',
             sourceMapFilename: '[file].map'
         }
     };
@@ -52,8 +53,10 @@ module.exports = (env, argv) => {
             })
         ];
         config.devServer = {
-            contentBase: path.join(__dirname, './src'),
+            contentBase: './src/',
             compress: true,
+            inline: true,
+            hot: true,
             port: 3000,
             historyApiFallback: true
         };

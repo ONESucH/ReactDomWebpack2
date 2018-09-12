@@ -1,3 +1,4 @@
+/* [path][name].[ext]?[hash] */
 const path = require('path'),
     CopyWebpackPlugin = require('copy-webpack-plugin'),
     HtmlWebPackPlugin = require('html-webpack-plugin'),
@@ -5,7 +6,9 @@ const path = require('path'),
         entry: './src/index.jsx',
         output: {
             path: path.resolve(__dirname, './dist/'),
-            filename: 'bundle.js'
+            filename: 'bundle.js',
+            publicPath: './',
+            sourceMapFilename: '[file].map'
         }
     };
 
@@ -25,17 +28,18 @@ module.exports = (env, argv) => {
                 },
                 {
                     test: /\.less$/,
-                    use: [{
-                        loader: 'style-loader'
-                    }, {
-                        loader: 'css-loader'
-                    }, {
-                        loader: 'less-loader', options: {
-                            paths: [
-                                path.resolve(__dirname, 'node_modules')
-                            ]
+                    use: [
+                        {loader: 'style-loader'},
+                        {loader: 'css-loader'},
+                        {
+                            loader: 'less-loader',
+                            options: {
+                                paths: [
+                                    path.resolve(__dirname, 'node_modules')
+                                ]
+                            }
                         }
-                    }]
+                    ]
                 },
                 {
                     test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000'
@@ -49,9 +53,11 @@ module.exports = (env, argv) => {
             })
         ];
         config.devServer = {
-            contentBase: path.join(__dirname, './src/'),
+            contentBase: path.join(__dirname, './src'),
             compress: true,
-            port: 3000
+            port: 3000,
+            publicPath: '/dist/',
+            historyApiFallback: true
         };
         config.watch = true;
     }
@@ -67,6 +73,10 @@ module.exports = (env, argv) => {
                 {from: './src/assets', to: 'assets'}
             ])
         ];
+        config.resolve = {
+            extensions: ['.js', '.jsx', '.ts']
+        };
+        config.target = 'web';
         config.module = {
             rules: [
                 {

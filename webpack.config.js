@@ -19,14 +19,7 @@ module.exports = (env, argv) => {
                 {
                     test: /\.(js|jsx|ts)?$/,
                     exclude: /(node_modules|bower_components)/,
-                    use: {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: [
-                                ['env']
-                            ]
-                        }
-                    }
+                    use: {  loader: 'babel-loader'  }
                 },
                 {
                     test: /\.less$/,

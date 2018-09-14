@@ -2,7 +2,7 @@ const path = require('path'),
     CopyWebpackPlugin = require('copy-webpack-plugin'),
     HtmlWebPackPlugin = require('html-webpack-plugin'),
     config = {
-        entry: './src/index.jsx',
+        entry: ['babel-polyfill', './src/index.jsx'],
         output: {
             path: path.resolve(__dirname, 'dist'),
             filename: 'bundle.js'
@@ -20,7 +20,12 @@ module.exports = (env, argv) => {
                     test: /\.(js|jsx|ts)?$/,
                     exclude: /(node_modules|bower_components)/,
                     use: {
-                        loader: 'babel-loader'
+                        loader: 'babel-loader',
+                        options: {
+                            presets: [
+                                ['env']
+                            ]
+                        }
                     }
                 },
                 {

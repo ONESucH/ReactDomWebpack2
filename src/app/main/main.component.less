@@ -4,13 +4,15 @@
 @import './main.component.adaptive.less';
 
 .main {
-  .a-row-nowrap;
-  .a-center;
-  .a-jc-space-betwen;
-  background: red;
-  height: 100vh;
-  h1 {
-    background: blue;
-    color: orange;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  transition: 10s;
+  transform: rotate(360deg);
+  border: 1px solid red;
+  box-shadow: 0 0 10px 2px black;
+  text-align: center;
+  margin: 30vh auto;
 }

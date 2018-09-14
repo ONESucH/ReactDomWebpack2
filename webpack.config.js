@@ -1,6 +1,8 @@
 const path = require('path'),
     CopyWebpackPlugin = require('copy-webpack-plugin'),
     HtmlWebPackPlugin = require('html-webpack-plugin'),
+    CleanCSSPlugin = require('less-plugin-clean-css'),
+    LessPluginAutoPrefix = require('less-plugin-autoprefix'),
     config = {
         entry: ['babel-polyfill', './src/index.jsx'],
         output: {
@@ -29,8 +31,12 @@ module.exports = (env, argv) => {
                         {
                             loader: 'less-loader',
                             options: {
+                                sourceMap: true,
                                 paths: [
                                     path.resolve(__dirname, 'node_modules')
+                                ],
+                                plugins: [
+                                    new LessPluginAutoPrefix({browsers: ['last 3 versions']})
                                 ]
                             }
                         }
@@ -97,8 +103,13 @@ module.exports = (env, argv) => {
                         loader: 'css-loader'
                     }, {
                         loader: 'less-loader', options: {
+                            sourceMap: true,
                             paths: [
                                 path.resolve(__dirname, 'node_modules')
+                            ],
+                            plugins: [
+                                new LessPluginAutoPrefix({browsers: ['last 3 versions']}),
+                                new CleanCSSPlugin({ advanced: true })
                             ]
                         }
                     }]

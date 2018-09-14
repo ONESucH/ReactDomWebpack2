@@ -1,14 +1,11 @@
-/* [path][name].[ext]?[hash] */
 const path = require('path'),
     CopyWebpackPlugin = require('copy-webpack-plugin'),
     HtmlWebPackPlugin = require('html-webpack-plugin'),
     config = {
         entry: './src/index.jsx',
         output: {
-            path: path.resolve(__dirname, './dist/'),
-            filename: 'bundle.js',
-            publicPath: '/',
-            sourceMapFilename: '[file].map'
+            path: path.resolve(__dirname, 'dist'),
+            filename: 'bundle.js'
         }
     };
 
@@ -29,8 +26,8 @@ module.exports = (env, argv) => {
                 {
                     test: /\.less$/,
                     use: [
-                        {loader: 'style-loader'},
-                        {loader: 'css-loader'},
+                        {   loader: 'style-loader'  },
+                        {   loader: 'css-loader'    },
                         {
                             loader: 'less-loader',
                             options: {
@@ -123,9 +120,6 @@ module.exports = (env, argv) => {
                     use: 'base64-inline-loader?limit=1000&name=[name].[ext]'
                 },
             ]
-        };
-        config.output = {
-            publicPath: path.join(__dirname, './dist/') // удалить, чтобы убрать в путях ссылки D://
         }
     }
 

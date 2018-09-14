@@ -8,9 +8,6 @@ import HeaderComponent from './app/header/header.component.jsx';
 import FooterComponent from './app/footer/footer.component.jsx';
 
 /* Стили */
-import './librares.global.less';
-import './alieses.less';
-import './styles.less';
 import './index.less';
 
 export default class Root extends React.Component {

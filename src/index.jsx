@@ -1,11 +1,13 @@
 /* Модули */
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 /* Регистрируем компоненты */
-import MainComponent from './app/main/main.component.jsx';
-import HeaderComponent from './app/header/header.component.jsx';
-import FooterComponent from './app/footer/footer.component.jsx';
+import HeaderComponent from './app/Header/Header.component';
+import MainComponent from './app/Main/Main.component';
+import FooterComponent from './app/Footer/Footer.component';
+import CarsComponent from './app/Cars/Cars.component';
 
 /* Стили */
 import './index.less';
@@ -15,15 +17,26 @@ export default class Root extends React.Component {
         return (
             <div className="app-main">
                 <div className="max-size-window">
-                    <HeaderComponent />
                     
-                    <MainComponent />
+                    <HeaderComponent />
+
+                    <Switch>
+                        <Route exact path='/' component={MainComponent} />
+                        <Route path='/cars' component={CarsComponent} />
+                        <Route path='/header' component={HeaderComponent} />
+                        <Route path='/footer' component={FooterComponent} />
+                    </Switch>
 
                     <FooterComponent />
+                    
                 </div>
             </div>
         )
     }
 }
 
-ReactDOM.render(<Root />, document.getElementById('root'));
+ReactDOM.render((
+    <BrowserRouter>
+        <Root />
+    </BrowserRouter>
+), document.getElementById('root'));

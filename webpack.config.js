@@ -6,8 +6,7 @@ const path = require('path'),
     config = {
         entry: ['babel-polyfill', './src/index.jsx'],
         output: {
-            path: path.resolve(__dirname, 'dist'),
-            filename: 'bundle.js'
+            path: path.resolve(__dirname, 'dist')
         }
     };
 
@@ -15,6 +14,10 @@ module.exports = (env, argv) => {
 
     if (argv.mode === 'development') {
         config.mode = 'development';
+        config.output = {
+            path: path.resolve(__dirname, 'dist'),
+                filename: 'bundle.js'
+        };
         config.devtool = 'inline-source-map';
         config.module = {
             rules: [
@@ -60,6 +63,7 @@ module.exports = (env, argv) => {
             contentBase: './src/',
             compress: true,
             inline: true,
+            progress: true,
             hot: true,
             port: 3000,
             historyApiFallback: true
@@ -75,7 +79,8 @@ module.exports = (env, argv) => {
                 filename: './index.html'
             }),
             new CopyWebpackPlugin([
-                {from: './src/assets', to: 'assets'}
+                {from: './src/assets/img', to: 'assets/img'},
+                {from: './src/assets/vendor', to: 'assets/vendor'}
             ])
         ];
         config.resolve = {

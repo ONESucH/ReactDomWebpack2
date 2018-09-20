@@ -1,13 +1,13 @@
+/* Модули */
 import React from 'react';
 
 /* Стили */
-
-import './header.component.less';
+import './Header.component.less';
 
 export default class HeaderComponent extends React.Component {
     render() {
         return (
-            <div className="app-header">Header component loaded!</div>
+            <div className="app-Header">Header component loaded!</div>
         )
     }
 }

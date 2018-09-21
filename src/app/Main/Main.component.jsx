@@ -10,9 +10,7 @@ export default class MainComponent extends React.Component {
         return (
             <div className="app-Main">
                 Main component loaded!
-                <Link to="/cards"> cards </Link>
-                <Link to="/header"> header </Link>
-                <Link to="/footer"> footer </Link>
+                <Link to="/cars"> cards </Link>
             </div>
         )
     }

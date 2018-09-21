@@ -23,8 +23,6 @@ export default class Root extends React.Component {
                     <Switch>
                         <Route exact path='/' component={MainComponent} />
                         <Route path='/cars' component={CarsComponent} />
-                        <Route path='/header' component={HeaderComponent} />
-                        <Route path='/footer' component={FooterComponent} />
                     </Switch>
 
                     <FooterComponent />
